@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>Quote Dashboard</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <a href="/logout" class="btn btn-primary btn-sm" role="button"style="float: right">Logout</a>
+        <h1>Welcome, {{ request.session.name }}!</h1>
+      </div>
+
+      <h3>Your Favorites</h3>
+      <div class="row">
+        {% if quotes %}
+          {% for quote in quotes %}
+          <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+              <p><b>{{ quote.quote.quote_by }}</b></p>
+              <p>{{ quote.quote.quote }}</p>
+              <p>posted by: <a href="info/{{ quote.quote.quoter_id }}">{{ quote.quote.quoter.first_name }}</a></p>
+              {% if quote.quote.quoter.id == quote.user.id %}
+              <a href="delete/{{ quote.quote.id }}" class="btn btn-danger btn-xs" role="button">Delete</a>
+              <a href="remove/{{ quote.quote.id }}" class="btn btn-warning btn-xs" role="button">Remove from My List</a>
+              {% else %}
+              <a href="remove/{{ quote.quote.id }}" class="btn btn-warning btn-xs" role="button">Remove from My List</a>
+              {% endif %}
+          </div>
+          <div class="clearfix visible-sm"></div>
+          {% endfor %}
+        {% endif %}
+      </div><br>
+
+      <h3>Quotable Quotes</h3>
+      <div style="width: 1000px; height: 400px; overflow: scroll">
+        {% if others %}
+          {% for other in others %}
+          <div class="well well-sm">
+            <p><b>{{ other.quote_by }}</b></p>
+            <p>{{ other.quote }}</p>
+            <p>posted by: <a href="info/{{ other.quoter_id }}">{{ other.quoter.first_name }}</a></p>
+            <a href="addto/{{ other.id }}" class="btn btn-default btn-xs" role="button">Add to my Favorites</a>
+          </div>
+          {% endfor %}
+        {% endif %}
+      </div>
+      <br>
+      <a href="add/{{ request.session.id }}" class="btn btn-primary btn-sm" role="button">Add New Quote</a>
+
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>Add Quote</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <a href="/dashboard" class="btn btn-primary btn-sm" role="button" style="float: right">Dashboard</a>
+        <a href="/logout"class="btn btn-primary btn-sm" role="button" style="float: right">Logout</a>
+        <h1>Contribute a Quote:</h1>
+      </div>
+
+      <form action="/add_item" method="post">
+        {% csrf_token %}
+        <div class="input-group input-group-md">
+          <span class="input-group-addon">Quoted by</span>
+          <input type="text" name="quote_by" placeholder="ex. Dr.Seuss">
+        </div><br>
+        <textarea name="quote" rows="8" cols="40" placeholder="Enter text here..."></textarea><br>
+        <input type="submit" class="btn btn-success btn-md" value="Add">
+      </form>
+      {% if messages %}
+        {% for message in messages %}
+          <p style="color: red"><b>{{ message }}</b></p>
+        {% endfor %}
+      {% endif %}
+    </div>
+  </body>
+</html>

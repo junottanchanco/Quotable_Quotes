@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width = device-width, initial-scale = 1">
+    <title>{{request.session.name1}}</title>
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container">
+      <div class="page-header">
+        <a href="/dashboard"><button style="float: right">Dashboard</button></a>
+        <a href="/logout"><button style="float: right">Logout</button></a>
+        <h1>Posts by {{ request.session.name1 }} </h1>
+        <p>{{ request.session.count }} posted quotes</p>
+      </div>
+      <div class="row">
+          {% if quotes %}
+            {% for quote in quotes %}
+            <div class="col-lg-4 col-md-3 col-sm-6 col-xs-12">
+              <p><b style="color: blue">{{ quote.quote_by}}</b><br> <i>{{ quote.quote }}</i></p>
+            </div>
+            <div class="clearfix visible-sm"></div>
+            {% endfor %}
+          {% endif %}
+      </div>
+    </div>
+  </body>
+</html>
